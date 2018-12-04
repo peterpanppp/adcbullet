@@ -16,6 +16,7 @@ void SivBlockTest()
 	SivbtDynamicWorld world;
 	while (System::Update())
 	{
-
+		world.update();
+		world.draw();
 	}
 }
