@@ -54,12 +54,16 @@ SivbtDynamicWorld::~SivbtDynamicWorld()
 	dynamicsWorld->removeRigidBody(groundRigidBody);
 	delete groundRigidBody->getMotionState();
 	delete groundRigidBody;
-
-	//delete groundMotionState;
+	for (auto RigidBody : btRigidBodies)
+	{
+		dynamicsWorld->removeRigidBody(RigidBody);
+		delete RigidBody->getMotionState();
+		delete RigidBody;
+	}
 	delete solver;
 	delete collisionConfiguration;
 	delete broadphase;
 	delete groundShape;
-	delete dynamicsWorld;
 	delete dispatcher;
+	delete dynamicsWorld;
 }
