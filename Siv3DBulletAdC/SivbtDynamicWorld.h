@@ -10,6 +10,7 @@
 # include "LinearMath/btIDebugDraw.h"
 
 # include "SivBlock.h"
+# include "SivJoint.h"
 
 class SivbtDynamicWorld
 {
@@ -44,6 +45,10 @@ public:
 		auto rigidBodyPtr = block.getRigidBodyPtr();
 		btRigidBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
+	}
+	void addJoint(SivJoint& joint)
+	{
+		dynamicsWorld->addConstraint(joint.getbtPoint2PointConstraint());
 	}
 private:
 	btDiscreteDynamicsWorld* dynamicsWorld;
