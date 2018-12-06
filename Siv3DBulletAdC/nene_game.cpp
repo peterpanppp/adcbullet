@@ -26,8 +26,9 @@ inline void CreateWall(SivBlock& box, SivBlock& basePlate, SivbtDynamicWorld& dy
 void nene_game()
 {
 	Window::Resize(640 * 2, 480 * 2);
-	SivBlock originBox;
-	SivBlock boardBox(Vec3(10, 0.25, 10), Vec3(0, 3, 0), 100000.0);
+	Graphics::SetBackground(Color(172, 69, 124));
+	SivBlock originBox(Vec3::One, Vec3::Zero, 0, Color(0, 0, 0, 0));
+	SivBlock boardBox(Vec3(10, 0.25, 10), Vec3(0, 3, 0), 100000.0, Color(107, 150, 228));
 	SivbtDynamicWorld world;
 	world.addRigidBody(originBox);
 	world.addRigidBody(boardBox);
@@ -38,7 +39,7 @@ void nene_game()
 	world.addJoint(uniJoint);
 	uniJoint.setRotationalLimitMotor(2);
 	uniJoint.setRotationalLimitMotor(1);
-	SivSphere ball(Vec3(8.5, 5, 8.5), 0.25);
+	SivSphere ball(Vec3(8.5, 5, 8.5), 0.25, 1, Color(141, 144, 179));
 	world.addRigidBody(ball);
 	Array<SivBlock> walls;
 	Array<SivJoint> wallJoints;

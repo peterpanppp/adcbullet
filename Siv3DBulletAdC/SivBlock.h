@@ -17,10 +17,17 @@ btVector3 bt2s3d(const Vec3& vec)
 
 }
 
+struct SivBlockData
+{
+	Vec3 halfSize;
+	Vec3 center;
+	Color color;
+};
+
 class SivBlock
 {
 public:
-	SivBlock(const Vec3& halfSize = Vec3(1, 1, 1), const Vec3& boxCenter = Vec3::Zero, double weight = 0)
+	SivBlock(const Vec3& halfSize = Vec3(1, 1, 1), const Vec3& boxCenter = Vec3::Zero, double weight = 0, Color color = Palette::White)
 	{
 		size = halfSize;
 		box = new btBoxShape(btVector3(size.x, size.y, size.z));
@@ -35,6 +42,9 @@ public:
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCIBox(mass, fallMotionStateBox, box, fallInertia);
 		fallRigidBodyBox = new btRigidBody(fallRigidBodyCIBox);
 		fallRigidBodyBox->setActivationState(DISABLE_DEACTIVATION);
+		data.center = center;
+		data.halfSize = size;		
+		data.color = color;
 	}
 	~SivBlock()
 	{
@@ -60,6 +70,14 @@ public:
 	{
 		return btVector3(size.x, size.y, size.z);
 	}
+	SivBlockData getData() const
+	{
+		return data;
+	}
+	void setColor(ColorF color)
+	{
+		data.color = color;
+	}
 private:
 	btRigidBody* fallRigidBodyBox;
 	btDefaultMotionState* fallMotionStateBox;
@@ -67,5 +85,6 @@ private:
 	Vec3 center;
 	Vec3 size;
 	double mass;
+	SivBlockData data;
 };
 

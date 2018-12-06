@@ -98,7 +98,7 @@ public:
 			s3d::Line3D(s3d::Vec3(0, 1000, 0), s3d::Vec3(0, -1000, 0)).drawForward(s3d::Palette::Blue);
 			s3d::Line3D(s3d::Vec3(0, 0, 1000), s3d::Vec3(0, 0, -1000)).drawForward(s3d::Palette::Green);
 		}
-		assert(btRigidBodies.size() == blockHalfSizes.size());
+		assert(btRigidBodies.size() == blockDatas.size());
 		for (auto i : step(btRigidBodies.size()))
 		{
 			btTransform trans;
@@ -107,10 +107,10 @@ public:
 			Quaternion q(rot.getX(), rot.getY(), rot.getZ(), rot.getW());
 			auto pos = trans.getOrigin();
 			Vec3 point(pos.getX(), pos.getY(), pos.getZ());
-			auto hsize = blockHalfSizes[i];
-			Box(Vec3::Zero, bt2s3d(btVector3(hsize.x, hsize.y, hsize.z) * 2)).asMesh().rotated(q).translated(point).drawShadow().draw(Palette::Green);
+			auto hsize = blockDatas[i].halfSize;
+			Box(Vec3::Zero, bt2s3d(btVector3(hsize.x, hsize.y, hsize.z) * 2)).asMesh().rotated(q).translated(point).drawShadow().draw(blockDatas[i].color);
 		}
-		assert(btRigidSphereBodies.size() == spheresRadius.size());
+		assert(btRigidSphereBodies.size() == sphereDatas.size());
 		for (auto i : step(btRigidSphereBodies.size()))
 		{
 			btTransform trans;
@@ -119,23 +119,23 @@ public:
 			Quaternion q(rot.getX(), rot.getY(), rot.getZ(), rot.getW());
 			auto pos = trans.getOrigin();
 			Vec3 point(pos.getX(), pos.getY(), pos.getZ());
-			auto radius = spheresRadius[i];
-			Sphere(Vec3::Zero, radius).asMesh().rotated(q).translated(point).drawShadow().draw(Palette::Green);
+			auto radius = sphereDatas[i].radius;
+			Sphere(Vec3::Zero, radius).asMesh().rotated(q).translated(point).drawShadow().draw(sphereDatas[i].color);
 		}
 	}
 	void addRigidBody(SivBlock& block)
 	{
-		blockHalfSizes.emplace_back(block.getSizeSiv3d());
 		auto rigidBodyPtr = block.getRigidBodyPtr();
 		btRigidBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
+		blockDatas.emplace_back(block.getData());
 	}
 	void addRigidBody(SivSphere& sphere)
 	{
-		spheresRadius.emplace_back(sphere.getRadius());
 		auto rigidBodyPtr = sphere.getRigidBodyPtr();
 		btRigidSphereBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
+		sphereDatas.emplace_back(sphere.getData());
 	}
 	void addJoint(SivJoint& joint)
 	{
@@ -160,7 +160,7 @@ private:
 	btCollisionDispatcher* dispatcher;
 	Array<btRigidBody*> btRigidBodies;
 	Array<btRigidBody*> btRigidSphereBodies;
-	Array<Vec3> blockHalfSizes;
-	Array<double> spheresRadius;
+	Array<SivBlockData> blockDatas;
+	Array<SivSphereData> sphereDatas;
 };
 
