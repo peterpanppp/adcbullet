@@ -248,10 +248,10 @@ void universal()
 	btVector3 btAxisB(1.0f, 0.0f, 0.0f);
 
 	btUniversalConstraint* pUniv = new btUniversalConstraint(*originBody, *basePlateBody, anchor, btAxisA, btAxisB);
+	dynamicsWorld->addConstraint(pUniv);
 	pUniv->setAngularLowerLimit(btVector3(0, -SIMD_PI * 0.05, -SIMD_PI * 0.05));
 	pUniv->setAngularUpperLimit(btVector3(0, SIMD_PI * 0.05, SIMD_PI * 0.05));
 
-	dynamicsWorld->addConstraint(pUniv);
 	auto motor0 = pUniv->getRotationalLimitMotor(2);
 	motor0->m_enableMotor = true;
 	motor0->m_targetVelocity = btRadians(0.0);
