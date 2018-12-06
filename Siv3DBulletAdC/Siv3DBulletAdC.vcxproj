@@ -176,6 +176,7 @@
     <ClCompile Include="BlockJoint.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="nene_game.cpp" />
     <ClCompile Include="SivBlock.cpp" />
     <ClCompile Include="SivBlockTest.cpp" />
     <ClCompile Include="SivbtDynamicWorld.cpp" />
