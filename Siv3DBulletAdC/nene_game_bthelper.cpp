@@ -1,12 +1,10 @@
 # include "BulletHelper.hpp"
 
-//using namespace s3dbt;
-
 void nene_game_bthelper()
 {
 	Window::Resize(640 * 2, 480 * 2);
 	Graphics::SetBackground(Color(172, 69, 124));
-	s3dbt::btBox originBox(Vec3::Zero, Vec3::One, 0, Color(0, 0, 0, 0));
+	s3dbt::btBox originBox(Vec3::Zero, Vec3::One, 0, Color(0, 0, 0, 0), false);
 	s3dbt::btBox boardBox(Vec3(0, 3, 0), Vec3(10, 0.25, 10), 100000.0, Color(107, 150, 228));
 	s3dbt::btDynamicWorld world;
 	world.addRigidBody(originBox);

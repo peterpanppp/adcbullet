@@ -13,12 +13,13 @@ struct btBoxData
 	Vec3 halfSize;
 	Vec3 center;
 	Color color;
+	bool drawFlg;
 };
 
 class btBox
 {
 public:
-	btBox(const Vec3& boxCenter = Vec3::Zero, const Vec3& halfSize = Vec3(1, 1, 1), double weight = 0, Color color = Palette::White)
+	btBox(const Vec3& boxCenter = Vec3::Zero, const Vec3& halfSize = Vec3(1, 1, 1), double weight = 0, Color color = Palette::White, bool drawFlg = true)
 	{
 		size = halfSize;
 		box = new btBoxShape(btVector3(size.x, size.y, size.z));
@@ -36,6 +37,7 @@ public:
 		data.center = center;
 		data.halfSize = size;
 		data.color = color;
+		data.drawFlg = drawFlg;
 	}
 	~btBox()
 	{
@@ -306,14 +308,19 @@ public:
 		assert(btRigidBodies.size() == blockDatas.size());
 		for (auto i : step(btRigidBodies.size()))
 		{
+			auto blockData = blockDatas[i];
+			if (!blockData.drawFlg)
+			{
+				continue;
+			}
 			btTransform trans;
 			btRigidBodies[i]->getMotionState()->getWorldTransform(trans);
 			auto rot = trans.getRotation();
 			Quaternion q(rot.getX(), rot.getY(), rot.getZ(), rot.getW());
 			auto pos = trans.getOrigin();
 			Vec3 point(pos.getX(), pos.getY(), pos.getZ());
-			auto hsize = blockDatas[i].halfSize;
-			Box(Vec3::Zero, hsize * 2).asMesh().rotated(q).translated(point).drawShadow().draw(blockDatas[i].color);
+			auto hsize = blockData.halfSize;
+			Box(Vec3::Zero, hsize * 2).asMesh().rotated(q).translated(point).drawShadow().draw(blockData.color);
 		}
 		assert(btRigidSphereBodies.size() == sphereDatas.size());
 		for (auto i : step(btRigidSphereBodies.size()))
