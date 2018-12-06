@@ -145,6 +145,10 @@ public:
 	{
 		dynamicsWorld->addConstraint(joint.getUniversalConstraintPtr());
 	}
+	void addJoint(btUniversalConstraint* pUniv)
+	{
+		dynamicsWorld->addConstraint(pUniv);
+	}
 private:
 	btDiscreteDynamicsWorld* dynamicsWorld;
 	btSequentialImpulseConstraintSolver* solver;

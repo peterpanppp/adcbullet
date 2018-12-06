@@ -8,8 +8,8 @@ void nene_game();
 
 void Main()
 {
-	//nene_game();
-	universal();
+	nene_game();
+	//universal();
 	//SivBlockTest();
 	//test();
 }
