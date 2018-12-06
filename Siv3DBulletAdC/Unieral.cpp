@@ -265,6 +265,7 @@ void universal()
 	{
 		// Œã‚ë‚©‚ç4‚Â‚Ígoal—p
 		CSVReader csv(L"../FieldEdit/App/resource.csv");
+		CSVWriter csvw(L"../FieldEdit/App/resource_realscale.csv");
 		auto size = static_cast<int>(csv.rows);
 		for (auto i : step(size - 4))
 		{
@@ -274,6 +275,8 @@ void universal()
 			auto sizex = csv.get<double>(i, 2) * scale;
 			auto sizey = csv.get<double>(i, 3) * scale;
 			boxes.emplace_back(Box(Vec3(centerx - 10., blocksCenterY, -centery + 10.), Vec3(sizex, 1, sizey)));
+			csvw.write(sizex, sizey, centerx, centery);
+			csvw.nextLine();
 		}
 		for (auto i : step(4))
 		{
