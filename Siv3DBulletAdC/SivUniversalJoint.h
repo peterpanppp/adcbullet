@@ -22,10 +22,6 @@ public:
 	}
 	~SivUniversalJoint()
 	{
-		for (auto motor : motors)
-		{
-			delete motor.second;
-		}
 		delete pUniv;
 	}
 	/// <summary>
@@ -45,9 +41,8 @@ public:
 	}
 	void setRotationalLimitMotor(int index)
 	{
-		auto motor = pUniv->getRotationalLimitMotor(2);
-		motor->m_enableMotor = true;
-		motors.emplace(index, motor);
+		motors.emplace(index, std::move(pUniv->getRotationalLimitMotor(index)));
+		motors[index]->m_enableMotor = true;
 	}
 	/// <summary>
 	/// motor‚ğ’â~‚·‚éê‡‚Í‘æ2ˆø”‚É0‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢
