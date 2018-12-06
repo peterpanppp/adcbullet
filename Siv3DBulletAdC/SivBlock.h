@@ -34,6 +34,7 @@ public:
 		box->calculateLocalInertia(mass, fallInertia);
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCIBox(mass, fallMotionStateBox, box, fallInertia);
 		fallRigidBodyBox = new btRigidBody(fallRigidBodyCIBox);
+		fallRigidBodyBox->setActivationState(DISABLE_DEACTIVATION);
 	}
 	~SivBlock()
 	{
