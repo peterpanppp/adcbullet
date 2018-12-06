@@ -43,6 +43,7 @@ public:
 	{
 		motors.emplace(index, std::move(pUniv->getRotationalLimitMotor(index)));
 		motors[index]->m_enableMotor = true;
+		motors[index]->m_targetVelocity = btRadians(0.0);
 	}
 	/// <summary>
 	/// motor‚ğ’â~‚·‚éê‡‚Í‘æ2ˆø”‚É0‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢
