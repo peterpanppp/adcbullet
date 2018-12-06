@@ -51,6 +51,14 @@ public:
 	{
 		return btVector3(center.x, center.y, center.z);
 	}
+	Vec3 getSizeSiv3d() const
+	{
+		return size;
+	}
+	btVector3 getSizeBullet() const
+	{
+		return btVector3(size.x, size.y, size.z);
+	}
 private:
 	btRigidBody* fallRigidBodyBox;
 	btDefaultMotionState* fallMotionStateBox;
