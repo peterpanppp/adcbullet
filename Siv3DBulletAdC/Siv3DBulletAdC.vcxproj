@@ -180,6 +180,7 @@
     <ClCompile Include="SivBlockTest.cpp" />
     <ClCompile Include="SivbtDynamicWorld.cpp" />
     <ClCompile Include="SivJoint.cpp" />
+    <ClCompile Include="SivSphere.cpp" />
     <ClCompile Include="SivUniversalJoint.cpp" />
     <ClCompile Include="Unieral.cpp" />
   </ItemGroup>
@@ -303,6 +304,7 @@
     <ClInclude Include="SivBlock.h" />
     <ClInclude Include="SivbtDynamicWorld.h" />
     <ClInclude Include="SivJoint.h" />
+    <ClInclude Include="SivSphere.h" />
     <ClInclude Include="SivUniversalJoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

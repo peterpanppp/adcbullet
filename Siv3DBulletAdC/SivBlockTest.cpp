@@ -2,6 +2,7 @@
 # include "SivBlock.h"
 # include "SivJoint.h"
 # include "SivUniversalJoint.h"
+# include "SivSphere.h"
 
 
 void SivBlockTest()
@@ -23,6 +24,9 @@ void SivBlockTest()
 	uniJoint.setAngularLowerLimit(Vec3(0, -Math::PiF * 0.05, -Math::PiF * 0.05));
 	uniJoint.setAngularUpperLimit(Vec3(0, Math::PiF * 0.05, Math::PiF * 0.05));
 	world.addJoint(uniJoint);
+
+	SivSphere sphere(Vec3(0, 5, 0), 0.25, 1);
+	world.addRigidBody(sphere);
 
 	while (System::Update())
 	{

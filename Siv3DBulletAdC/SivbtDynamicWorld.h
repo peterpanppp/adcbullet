@@ -12,6 +12,7 @@
 # include "SivBlock.h"
 # include "SivJoint.h"
 # include "SivUniversalJoint.h"
+# include "SivSphere.h"
 
 class SivbtDynamicWorld
 {
@@ -72,6 +73,12 @@ public:
 			delete RigidBody->getMotionState();
 			delete RigidBody;
 		}
+		for (auto RigidBody : btRigidSphereBodies)
+		{
+			dynamicsWorld->removeRigidBody(RigidBody);
+			delete RigidBody->getMotionState();
+			delete RigidBody;
+		}
 		delete solver;
 		delete collisionConfiguration;
 		delete broadphase;
@@ -103,12 +110,31 @@ public:
 			auto hsize = blockHalfSizes[i];
 			Box(Vec3::Zero, bt2s3d(btVector3(hsize.x, hsize.y, hsize.z) * 2)).asMesh().rotated(q).translated(point).drawShadow().draw(Palette::Green);
 		}
+		assert(btRigidSphereBodies.size() == spheresRadius.size());
+		for (auto i : step(btRigidSphereBodies.size()))
+		{
+			btTransform trans;
+			btRigidSphereBodies[i]->getMotionState()->getWorldTransform(trans);
+			auto rot = trans.getRotation();
+			Quaternion q(rot.getX(), rot.getY(), rot.getZ(), rot.getW());
+			auto pos = trans.getOrigin();
+			Vec3 point(pos.getX(), pos.getY(), pos.getZ());
+			auto radius = spheresRadius[i];
+			Sphere(Vec3::Zero, radius).asMesh().rotated(q).translated(point).drawShadow().draw(Palette::Green);
+		}
 	}
 	void addRigidBody(SivBlock& block)
 	{
 		blockHalfSizes.emplace_back(block.getSizeSiv3d());
 		auto rigidBodyPtr = block.getRigidBodyPtr();
 		btRigidBodies.emplace_back(rigidBodyPtr);
+		dynamicsWorld->addRigidBody(rigidBodyPtr);
+	}
+	void addRigidBody(SivSphere& sphere)
+	{
+		spheresRadius.emplace_back(sphere.getRadius());
+		auto rigidBodyPtr = sphere.getRigidBodyPtr();
+		btRigidSphereBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
 	}
 	void addJoint(SivJoint& joint)
@@ -129,6 +155,8 @@ private:
 	btRigidBody* groundRigidBody;
 	btCollisionDispatcher* dispatcher;
 	Array<btRigidBody*> btRigidBodies;
+	Array<btRigidBody*> btRigidSphereBodies;
 	Array<Vec3> blockHalfSizes;
+	Array<double> spheresRadius;
 };
 
