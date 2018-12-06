@@ -14,6 +14,8 @@ void nene_game()
 	world.addJoint(uniJoint);
 	uniJoint.setRotationalLimitMotor(2);
 	uniJoint.setRotationalLimitMotor(1);
+	SivSphere ball(Vec3(0, 5, 0), 0.25);
+	world.addRigidBody(ball);
 
 	while (System::Update())
 	{
