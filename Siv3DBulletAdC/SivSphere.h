@@ -9,16 +9,16 @@
 # include "btBulletDynamicsCommon.h"
 # include "LinearMath/btIDebugDraw.h"
 
-struct SivSphereData
+struct btSphereData
 {
 	Vec3 center;
 	double radius;
 	Color color;
 };
-class SivSphere
+class btSphere
 {
 public:
-	SivSphere(const Vec3& center = Vec3::Zero, double ballRadius = 1, double mass = 1,Color color = Palette::White) :
+	btSphere(const Vec3& center = Vec3::Zero, double ballRadius = 1, double mass = 1,Color color = Palette::White) :
 		radius(ballRadius)
 	{
 		pColShape = new btSphereShape(btScalar(radius));
@@ -34,7 +34,7 @@ public:
 		data.radius = ballRadius;
 		data.color = color;
 	}
-	~SivSphere()
+	~btSphere()
 	{
 		delete pColShape;
 	}
@@ -46,7 +46,7 @@ public:
 	{
 		return fallRigidBodyBall;
 	}
-	SivSphereData getData() const
+	btSphereData getData() const
 	{
 		return data;
 	}
@@ -55,6 +55,6 @@ private:
 	btDefaultMotionState* fallMotionStateBall;
 	btRigidBody* fallRigidBodyBall;
 	double radius;
-	SivSphereData data;
+	btSphereData data;
 };
 

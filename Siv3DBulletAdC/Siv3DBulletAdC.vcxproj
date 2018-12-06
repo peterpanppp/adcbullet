@@ -177,6 +177,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="nene_game.cpp" />
+    <ClCompile Include="nene_game_bthelper.cpp" />
     <ClCompile Include="SivBlock.cpp" />
     <ClCompile Include="SivBlockTest.cpp" />
     <ClCompile Include="SivbtDynamicWorld.cpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockJoint.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletHelper.hpp" />
     <ClInclude Include="JointSupport.hpp" />
     <ClInclude Include="SivBlock.h" />
     <ClInclude Include="SivbtDynamicWorld.h" />

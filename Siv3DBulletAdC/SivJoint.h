@@ -11,10 +11,10 @@
 
 # include "SivBlock.h"
 
-class SivJoint
+class bt2PointJoint
 {
 public:
-	SivJoint(SivBlock& box0, SivBlock& box1)
+	bt2PointJoint(btBox& box0, btBox& box1)
 	{
 		Vec3 iniBoxPos0 = box0.getPosSiv3d();
 		Vec3 iniBoxPos1 = box1.getPosSiv3d();
@@ -25,13 +25,13 @@ public:
 		btVector3 pivotInB(chainB.x, chainB.y, chainB.z);
 		p2p = new btPoint2PointConstraint(*(box0.getRigidBodyPtr()), *(box1.getRigidBodyPtr()), pivotInA, pivotInB);
 	}
-	SivJoint(SivBlock& box0, SivBlock& box1, const Vec3& pivot0, const Vec3& pivot1)
+	bt2PointJoint(btBox& box0, btBox& box1, const Vec3& pivot0, const Vec3& pivot1)
 	{
 		btVector3 pivotInA(pivot0.x, pivot0.y, pivot0.z);
 		btVector3 pivotInB(pivot1.x, pivot1.y, pivot1.z);
 		p2p = new btPoint2PointConstraint(*(box0.getRigidBodyPtr()), *(box1.getRigidBodyPtr()), pivotInA, pivotInB);
 	}
-	~SivJoint()
+	~bt2PointJoint()
 	{
 		delete p2p;
 	}

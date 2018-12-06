@@ -9,10 +9,10 @@
 # include "LinearMath/btIDebugDraw.h"
 # include "SivBlock.h"
 
-class SivUniversalJoint
+class btUniversalJoint
 {
 public:
-	SivUniversalJoint(SivBlock& originBox, SivBlock& box, const Vec3& anchorPos = Vec3::Zero,
+	btUniversalJoint(btBox& originBox, btBox& box, const Vec3& anchorPos = Vec3::Zero,
 		const Vec3& axis0 = Vec3::Zero, const Vec3& axis1 = Vec3::Zero)
 	{
 		pUniv = new btUniversalConstraint(*(originBox.getRigidBodyPtr()), *(box.getRigidBodyPtr()),
@@ -20,7 +20,7 @@ public:
 			btVector3(axis0.x, axis0.y, axis0.z), 
 			btVector3(axis1.x, axis1.y, axis1.z));
 	}
-	~SivUniversalJoint()
+	~btUniversalJoint()
 	{
 		delete pUniv;
 	}

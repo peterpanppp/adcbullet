@@ -14,10 +14,10 @@
 # include "SivUniversalJoint.h"
 # include "SivSphere.h"
 
-class SivbtDynamicWorld
+class btDynamicWorld
 {
 public:
-	SivbtDynamicWorld()
+	btDynamicWorld()
 	{
 	#pragma region INIT_BULLET_WORLD
 
@@ -62,7 +62,7 @@ public:
 		/*******************************************************/
 #pragma endregion
 	}
-	~SivbtDynamicWorld()
+	~btDynamicWorld()
 	{
 		dynamicsWorld->removeRigidBody(groundRigidBody);
 		delete groundRigidBody->getMotionState();
@@ -123,25 +123,25 @@ public:
 			Sphere(Vec3::Zero, radius).asMesh().rotated(q).translated(point).drawShadow().draw(sphereDatas[i].color);
 		}
 	}
-	void addRigidBody(SivBlock& block)
+	void addRigidBody(btBox& block)
 	{
 		auto rigidBodyPtr = block.getRigidBodyPtr();
 		btRigidBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
 		blockDatas.emplace_back(block.getData());
 	}
-	void addRigidBody(SivSphere& sphere)
+	void addRigidBody(btSphere& sphere)
 	{
 		auto rigidBodyPtr = sphere.getRigidBodyPtr();
 		btRigidSphereBodies.emplace_back(rigidBodyPtr);
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
 		sphereDatas.emplace_back(sphere.getData());
 	}
-	void addJoint(SivJoint& joint)
+	void addJoint(bt2PointJoint& joint)
 	{
 		dynamicsWorld->addConstraint(joint.getbtPoint2PointConstraint());
 	}
-	void addJoint(SivUniversalJoint& joint)
+	void addJoint(btUniversalJoint& joint)
 	{
 		dynamicsWorld->addConstraint(joint.getUniversalConstraintPtr());
 	}
@@ -160,7 +160,7 @@ private:
 	btCollisionDispatcher* dispatcher;
 	Array<btRigidBody*> btRigidBodies;
 	Array<btRigidBody*> btRigidSphereBodies;
-	Array<SivBlockData> blockDatas;
-	Array<SivSphereData> sphereDatas;
+	Array<btBoxData> blockDatas;
+	Array<btSphereData> sphereDatas;
 };
 

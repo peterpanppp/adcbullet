@@ -17,17 +17,17 @@ btVector3 bt2s3d(const Vec3& vec)
 
 }
 
-struct SivBlockData
+struct btBoxData
 {
 	Vec3 halfSize;
 	Vec3 center;
 	Color color;
 };
 
-class SivBlock
+class btBox
 {
 public:
-	SivBlock(const Vec3& halfSize = Vec3(1, 1, 1), const Vec3& boxCenter = Vec3::Zero, double weight = 0, Color color = Palette::White)
+	btBox(const Vec3& halfSize = Vec3(1, 1, 1), const Vec3& boxCenter = Vec3::Zero, double weight = 0, Color color = Palette::White)
 	{
 		size = halfSize;
 		box = new btBoxShape(btVector3(size.x, size.y, size.z));
@@ -46,7 +46,7 @@ public:
 		data.halfSize = size;		
 		data.color = color;
 	}
-	~SivBlock()
+	~btBox()
 	{
 		delete box;
 	}
@@ -70,7 +70,7 @@ public:
 	{
 		return btVector3(size.x, size.y, size.z);
 	}
-	SivBlockData getData() const
+	btBoxData getData() const
 	{
 		return data;
 	}
@@ -85,6 +85,6 @@ private:
 	Vec3 center;
 	Vec3 size;
 	double mass;
-	SivBlockData data;
+	btBoxData data;
 };
 
