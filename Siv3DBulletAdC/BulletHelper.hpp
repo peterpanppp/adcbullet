@@ -16,10 +16,21 @@ struct btBoxData
 	bool drawFlg;
 };
 
+Vec3 ChangeHandedSystemVec3(const Vec3& vec)
+{
+	return Vec3(-vec.x, vec.y, vec.z);
+}
+
+Quaternion ChangeHandedSystemVec3(const Quaternion& quaternion)
+{
+	auto q = quaternion.component.m128_f32;
+	return Quaternion(-q[0], q[1], q[2], -q[3]);
+}
+
 class btBox
 {
 public:
-	btBox(const Vec3& boxCenter = Vec3::Zero, const Vec3& halfSize = Vec3(1, 1, 1), double weight = 0, Color color = Palette::White, bool drawFlg = true)
+	btBox(const Vec3& boxCenter = Vec3::Zero, const Vec3& halfSize = Vec3::One, double weight = 0, Color color = Palette::White, bool drawFlg = true)
 	{
 		size = halfSize;
 		box = new btBoxShape(btVector3(size.x, size.y, size.z));
