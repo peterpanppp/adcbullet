@@ -23,3 +23,7 @@ Siv3DBulletAdC/SivSphere.h
 Siv3DBulletAdC/SivSphere.cpp
 Siv3DBulletAdC/SivUniversalJoint.h
 Siv3DBulletAdC/SivUniversalJoint.cpp
+Siv3DBulletAdC/JointSupport.hpp
+Siv3DBulletAdC/ConstraintDemo.h
+Siv3DBulletAdC/ConstraintDemo.cpp
+Siv3DBulletAdC/Unieral.cpp
