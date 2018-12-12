@@ -1,10 +1,7 @@
 #pragma once
 
 # include <Siv3D.hpp>
-# include "BulletCollision/CollisionDispatch/btGhostObject.h"
-# include "ConstraintDemo.h"
 # include "btBulletDynamicsCommon.h"
-# include "LinearMath/btIDebugDraw.h"
 
 namespace s3dbt
 {
