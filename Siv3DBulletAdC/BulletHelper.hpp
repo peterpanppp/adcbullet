@@ -16,17 +16,6 @@ struct btBoxData
 	bool drawFlg;
 };
 
-Vec3 ChangeHandedSystemVec3(const Vec3& vec)
-{
-	return Vec3(-vec.x, vec.y, vec.z);
-}
-
-Quaternion ChangeHandedSystemVec3(const Quaternion& quaternion)
-{
-	auto q = quaternion.component.m128_f32;
-	return Quaternion(-q[0], q[1], q[2], -q[3]);
-}
-
 class btBox
 {
 public:
@@ -92,10 +81,10 @@ private:
 	btBoxData data;
 };
 
-class bt2PointJoint
+class btPoint2PointJoint
 {
 public:
-	bt2PointJoint(btBox& box0, btBox& box1)
+	btPoint2PointJoint(btBox& box0, btBox& box1)
 	{
 		Vec3 iniBoxPos0 = box0.getPosSiv3d();
 		Vec3 iniBoxPos1 = box1.getPosSiv3d();
@@ -106,13 +95,13 @@ public:
 		btVector3 pivotInB(chainB.x, chainB.y, chainB.z);
 		p2p = new btPoint2PointConstraint(*(box0.getRigidBodyPtr()), *(box1.getRigidBodyPtr()), pivotInA, pivotInB);
 	}
-	bt2PointJoint(btBox& box0, btBox& box1, const Vec3& pivot0, const Vec3& pivot1)
+	btPoint2PointJoint(btBox& box0, btBox& box1, const Vec3& pivot0, const Vec3& pivot1)
 	{
 		btVector3 pivotInA(pivot0.x, pivot0.y, pivot0.z);
 		btVector3 pivotInB(pivot1.x, pivot1.y, pivot1.z);
 		p2p = new btPoint2PointConstraint(*(box0.getRigidBodyPtr()), *(box1.getRigidBodyPtr()), pivotInA, pivotInB);
 	}
-	~bt2PointJoint()
+	~btPoint2PointJoint()
 	{
 		delete p2p;
 	}
@@ -132,7 +121,7 @@ class btUniversalJoint
 {
 public:
 	btUniversalJoint(btBox& originBox, btBox& box, const Vec3& anchorPos = Vec3::Zero,
-		const Vec3& axis0 = Vec3::Zero, const Vec3& axis1 = Vec3::Zero)
+		const Vec3& axis0 = Vec3::UnitX, const Vec3& axis1 = Vec3::UnitY)
 	{
 		pUniv = new btUniversalConstraint(*(originBox.getRigidBodyPtr()), *(box.getRigidBodyPtr()),
 			btVector3(anchorPos.x, anchorPos.y, anchorPos.z),
@@ -177,6 +166,10 @@ public:
 		motors[index]->m_targetVelocity = btRadians(rad);
 		motors[index]->m_maxMotorForce = force;
 	}
+	enum AXIS
+	{
+		X, Y, Z
+	};
 private:
 	btUniversalConstraint* pUniv;
 	std::map<int, btRotationalLimitMotor*> motors;
@@ -360,7 +353,7 @@ public:
 		dynamicsWorld->addRigidBody(rigidBodyPtr);
 		sphereDatas.emplace_back(sphere.getData());
 	}
-	void addJoint(bt2PointJoint& joint)
+	void addJoint(btPoint2PointJoint& joint)
 	{
 		dynamicsWorld->addConstraint(joint.getbtPoint2PointConstraint());
 	}

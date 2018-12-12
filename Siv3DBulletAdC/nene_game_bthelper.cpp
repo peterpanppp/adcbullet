@@ -14,12 +14,12 @@ void nene_game_bthelper()
 	uniJoint.setAngularLowerLimit(Vec3(0, -Math::PiF * range, -Math::PiF * range));
 	uniJoint.setAngularUpperLimit(Vec3(0, Math::PiF * range, Math::PiF * range));
 	world.addJoint(uniJoint);
-	uniJoint.setRotationalLimitMotor(2);
-	uniJoint.setRotationalLimitMotor(1);
+	uniJoint.setRotationalLimitMotor(s3dbt::btUniversalJoint::AXIS::Z);
+	uniJoint.setRotationalLimitMotor(s3dbt::btUniversalJoint::AXIS::Y);
 	s3dbt::btSphere ball(Vec3(8.5, 5, 8.5), 0.25, 1, Color(141, 144, 179));
 	world.addRigidBody(ball);
 	Array<s3dbt::btBox> walls;
-	Array<s3dbt::bt2PointJoint> wallJoints;
+	Array<s3dbt::btPoint2PointJoint> wallJoints;
 	{
 		CSVReader csv(L"../FieldEdit/App/resource_realscale.csv");
 		auto size = static_cast<int>(csv.rows);
